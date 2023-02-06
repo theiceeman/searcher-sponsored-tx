@@ -5,7 +5,7 @@
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "scripts": {
-    "start": "npx ts-node --project tsconfig.json src/index.ts",
+    "start": "npx ts-node --project tsconfig.json src/main.ts",
     "build": "npx tsc",
     "prepare": "npm run build",
     "lint": "npx eslint src"
@@ -21,10 +21,11 @@
   },
   "dependencies": {
     "@flashbots/ethers-provider-bundle": "^0.4.0",
+    "dotenv": "^16.0.3",
+    "ethers": "^5.4.2",
     "lodash": "^4.17.20",
     "log-timestamp": "^0.3.0",
     "ts-node": "^9.1.0",
-    "typescript": "^4.1.2",
-    "ethers": "^5.4.2"
+    "typescript": "^4.1.2"
   }
 }

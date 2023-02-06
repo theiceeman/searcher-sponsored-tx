@@ -7,6 +7,9 @@ import { BigNumber, providers, Wallet } from "ethers";
 import { Base } from "./engine/Base";
 import { checkSimulation, gasPriceToGwei, printTransactions } from "./utils";
 import { Approval721 } from "./engine/Approval721";
+import dotenv from "dotenv";
+import { TransferERC20 } from "./engine/TransferERC20";
+dotenv.config()
 
 require('log-timestamp');
 
@@ -57,13 +60,13 @@ async function main() {
   const block = await provider.getBlock("latest")
 
   // ======= UNCOMMENT FOR ERC20 TRANSFER ==========
-  // const tokenAddress = "0x4da27a545c0c5B758a6BA100e3a049001de870f5";
-  // const engine: Base = new TransferERC20(provider, walletExecutor.address, RECIPIENT, tokenAddress);
+  const tokenAddress = "0x326C977E6efc84E512bB9C30f76E30c160eD06FB";
+  const engine: Base = new TransferERC20(provider, walletExecutor.address, RECIPIENT, tokenAddress);
   // ======= UNCOMMENT FOR ERC20 TRANSFER ==========
 
   // ======= UNCOMMENT FOR 721 Approval ==========
-  const HASHMASKS_ADDRESS = "0xC2C747E0F7004F9E8817Db2ca4997657a7746928";
-  const engine: Base = new Approval721(RECIPIENT, [HASHMASKS_ADDRESS]);
+  // const HASHMASKS_ADDRESS = "0xC2C747E0F7004F9E8817Db2ca4997657a7746928";
+  // const engine: Base = new Approval721(RECIPIENT, [HASHMASKS_ADDRESS]);
   // ======= UNCOMMENT FOR 721 Approval ==========
 
   const sponsoredTransactions = await engine.getSponsoredTransactions();
@@ -99,6 +102,7 @@ async function main() {
     })
   ]
   const signedBundle = await flashbotsProvider.signBundle(bundleTransactions)
+  console.log("damn!", { bundleTransactions, signedBundle })
   await printTransactions(bundleTransactions, signedBundle);
   const simulatedGasPrice = await checkSimulation(flashbotsProvider, signedBundle);
 
